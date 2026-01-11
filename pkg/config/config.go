@@ -1,5 +1,11 @@
 package config
 
+import (
+	"os"
+
+	"github.com/joho/godotenv"
+)
+
 type (
 	Config struct {
 		ModelName string
@@ -8,9 +14,16 @@ type (
 )
 
 func NewConfig() *Config {
-	// read from env
+	path, _ := os.Getwd()
+	err := godotenv.Load(path + "/.env")
+	if err != nil {
+		return &Config{
+			ModelName: "googleai/gemini-2.5-flash",
+			APIKey:    "generate from aistudio",
+		}
+	}
 	return &Config{
-		ModelName: "googleai/gemini-2.5-flash",
-		APIKey:    "AIzaSyDYTT7p0re9lX1rBW4Nu_JZdwgZ5bq3M0w",
+		ModelName: os.Getenv("MODEL_NAME"),
+		APIKey:    os.Getenv("API_KEY"),
 	}
 }
