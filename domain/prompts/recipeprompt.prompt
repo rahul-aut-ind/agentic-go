@@ -1,0 +1,9 @@
+---
+input:
+  schema:
+    ingredient: string
+    dietaryRestrictions: string
+---
+Create a recipe with the following requirements:
+Main ingredient: {{ingredient}}
+Dietary restrictions: {{dietaryRestrictions}}
