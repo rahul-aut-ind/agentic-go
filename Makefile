@@ -1,10 +1,11 @@
 run-local:
 	go run cmd/service-genkit/main.go	
 
-sanilize: deps lint
+sanitize: lint test
 
 lint:
 	golangci-lint run --timeout=2m
 
-deps:
-	wire ./...
+test:
+	go test ./... -v
+	

@@ -21,9 +21,9 @@ type (
 	}
 )
 
-func NewClient(cfg *config.Config) *Client {
+func NewClient(ctx context.Context, cfg *config.Config) *Client {
 	return &Client{
-		genkit: genkit.Init(context.Background(),
+		genkit: genkit.Init(ctx,
 			genkit.WithPlugins(&googlegenai.GoogleAI{
 				APIKey: cfg.APIKey,
 			}),
@@ -32,7 +32,7 @@ func NewClient(cfg *config.Config) *Client {
 	}
 }
 
-func (c *Client) GenerateRecipe(ctx context.Context, ingredient string, dietaryRestrictions string) (*models.RecipeOutput, error) {
+func (c *Client) GenerateRecipe(ctx context.Context, ingredient, dietaryRestrictions string) (*models.RecipeOutput, error) {
 	// Define a type-safe flow
 	recipeFlow := genkit.DefineFlow(c.genkit, RecipeFlowName, c.recipeFlow)
 

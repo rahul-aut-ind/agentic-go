@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/rahul-aut-ind/genkit-go/pkg/config"
 	"github.com/rahul-aut-ind/genkit-go/pkg/logger"
@@ -15,14 +16,12 @@ var (
 )
 
 func main() {
-	ctx := context.Background()
-
-	// initialize config
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	// initialize everything
 	env := config.NewConfig()
-	logger := logger.New()
-
-	// Initialize service
-	service := recipegeneratorservice.NewClient(env)
+	log := logger.New()
+	service := recipegeneratorservice.NewClient(ctx, env)
 
 	// generate recipe
 	resp, err := service.GenerateRecipe(ctx, ingredient, dietaryRestrictions)
@@ -32,6 +31,6 @@ func main() {
 	}
 
 	// Print the structured recipe
-	logger.PrettifyJSON(resp)
+	log.PrettifyJSON(resp)
 
 }
