@@ -15,6 +15,21 @@ const (
 	RecipeFlowName = "recipeGeneratorFlow"
 )
 
+var (
+	userInputNil = map[string]bool{
+		"":                true,
+		" ":               true,
+		"none":            true,
+		"na":              true,
+		"no":              true,
+		"not specified":   true,
+		"nan":             true,
+		"null":            true,
+		"nothing":         true,
+		"not applicable	": true,
+	}
+)
+
 type (
 	Client struct {
 		genkit *genkit.Genkit
@@ -50,7 +65,7 @@ func (c *Client) GenerateRecipe(ctx context.Context, ingredient, dietaryRestrict
 
 func (c *Client) recipeFlow(ctx context.Context, input *models.RecipeInput) (*models.RecipeOutput, error) {
 	dietaryRestrictions := input.DietaryRestrictions
-	if dietaryRestrictions == "" {
+	if _, ok := userInputNil[dietaryRestrictions]; ok {
 		dietaryRestrictions = "none"
 	}
 

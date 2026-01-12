@@ -1,6 +1,8 @@
 run-local:
 	go run cmd/service-genkit/main.go	
 
+local-run: run-local
+
 sanitize: lint test
 
 lint:
