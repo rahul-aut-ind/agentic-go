@@ -25,7 +25,8 @@ func main() {
 	fmt.Scanf("%s", &ingredient)
 	fmt.Println("Enter dietary restrictions if any (leave blank for none):")
 	fmt.Scanf("%s", &dietaryRestrictions)
-	fmt.Println("ok, generating a recipe for you with ingredient ", ingredient, " and dietary restrictions ", dietaryRestrictions)
+	fmt.Println("ok, generating a recipe for you with ingredient {", ingredient, "	} and dietary restrictions {", dietaryRestrictions, "}")
+
 	// generate recipe
 	start := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
