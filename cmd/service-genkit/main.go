@@ -22,9 +22,15 @@ func main() {
 	service := recipegeneratorservice.NewClient(context.Background(), env)
 
 	fmt.Println("Enter ingredient:")
-	fmt.Scanf("%s", &ingredient)
+	_, e := fmt.Scanf("%s", &ingredient)
+	if e != nil {
+		log.Warnf("Error reading ingredient: %w, taking default", e)
+	}
 	fmt.Println("Enter dietary restrictions if any (leave blank for none):")
-	fmt.Scanf("%s", &dietaryRestrictions)
+	_, e = fmt.Scanf("%s", &dietaryRestrictions)
+	if e != nil {
+		log.Warnf("Error reading dietary restrictions: %w, taking default", e)
+	}
 	fmt.Println("ok, generating a recipe for you with ingredient {", ingredient, "	} and dietary restrictions {", dietaryRestrictions, "}")
 
 	// generate recipe
