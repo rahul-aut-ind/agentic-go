@@ -125,6 +125,7 @@ func (c *Client) generateParallelFlow(ctx context.Context, req *models.Marketing
 	}, nil
 }
 
+//nolint:revive // signature is important for genkit
 func (c *Client) getWeatherTool(ctx *ai.ToolContext, input *models.WeatherToolInput) (string, error) {
 	c.log.Infof("Tool is called for location: %s", input.Location)
 	return fmt.Sprintf("The current weather in %s is 75°F and sunny.", input.Location), nil
