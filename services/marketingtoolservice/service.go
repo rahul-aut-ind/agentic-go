@@ -19,7 +19,7 @@ const (
 	ParallelToolFlowName = "parallelToolFlow"
 	WeatherToolName      = "getWeather"
 
-	WeatherToolDefinition = `Gets the current weather in a given location`
+	WeatherToolDefinition = `Gets the current weather for a specific location`
 )
 
 type (
@@ -65,39 +65,6 @@ func (c *Client) GenerateMarketingIdea(ctx context.Context, productName, locatio
 func (c *Client) generateParallelFlow(ctx context.Context, req *models.MarketingIdeaRequest) (*models.MarketingIdeaResponse, error) {
 
 	var name, tagline, weather string
-
-	c.log.Infof("2 Location is: %s", req.Location)
-
-	weatherPrompt := genkit.DefinePrompt(c.genkit, "weatherPrompt",
-		ai.WithPrompt("What is the weather in {{location}}?"),
-		ai.WithTools(c.weatherTool),
-	)
-
-	resp2, err := weatherPrompt.Execute(ctx,
-		ai.WithInput(map[string]string{"location": req.Location}),
-	)
-	if err != nil {
-		weather = "not available"
-	} else {
-		weather = resp2.Text()
-	}
-
-	c.log.Infof("2 Weather in %s: %s", req.Location, weather)
-
-	resp1, err := genkit.Generate(ctx, c.genkit,
-		ai.WithPrompt("What is the current weather in %s", req.Location),
-		ai.WithTools(c.weatherTool),
-	)
-	if err != nil {
-		weather = "not available"
-	} else {
-		weather = resp1.Text()
-	}
-
-	c.log.Infof("1 Weather in %s: %s", req.Location, weather)
-	if true {
-		return nil, nil
-	}
 
 	// Task 0: Get weather for location
 	resp, err := genkit.Generate(ctx, c.genkit,
@@ -158,8 +125,7 @@ func (c *Client) generateParallelFlow(ctx context.Context, req *models.Marketing
 	}, nil
 }
 
-func (c *Client) getWeatherTool(ctx *ai.ToolContext, location string) (string, error) {
-	c.log.Infof("Tool is called")
-	// In a real app, we would call an API here.
-	return fmt.Sprintf("The current weather in %s is 75°F and sunny.", location), nil
+func (c *Client) getWeatherTool(ctx *ai.ToolContext, input *models.WeatherToolInput) (string, error) {
+	c.log.Infof("Tool is called for location: %s", input.Location)
+	return fmt.Sprintf("The current weather in %s is 75°F and sunny.", input.Location), nil
 }

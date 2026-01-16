@@ -8,7 +8,11 @@ type (
 
 	MarketingIdeaRequest struct {
 		ProductName string `json:"productName"`
-		Location    string `json:"location" jsonschema_description:"Location to get weather for"`
+		Location    string `json:"location" jsonschema_description:"The city name, e.g. San Francisco"`
+	}
+
+	WeatherToolInput struct {
+		Location string `json:"location" jsonschema_description:"The city name, e.g. San Francisco"`
 	}
 )
 
