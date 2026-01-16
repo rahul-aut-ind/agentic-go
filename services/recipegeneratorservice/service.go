@@ -42,7 +42,7 @@ func NewClient(ctx context.Context, cfg *config.Config) *Client {
 			genkit.WithPlugins(&googlegenai.GoogleAI{
 				APIKey: cfg.APIKey,
 			}),
-			genkit.WithDefaultModel(cfg.ModelName),
+			genkit.WithDefaultModel(cfg.GeneralModelName),
 		),
 	}
 }

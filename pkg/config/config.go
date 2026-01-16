@@ -8,8 +8,9 @@ import (
 
 type (
 	Config struct {
-		ModelName string
-		APIKey    string
+		GeneralModelName  string
+		ImageGenModelName string
+		APIKey            string
 	}
 )
 
@@ -18,12 +19,14 @@ func NewConfig() *Config {
 	err := godotenv.Load(path + "/.env")
 	if err != nil {
 		return &Config{
-			ModelName: "googleai/gemini-2.5-flash",
-			APIKey:    "generate from aistudio",
+			GeneralModelName:  "googleai/gemini-2.5-flash",
+			ImageGenModelName: "googleai/imagen-3.0-generate-002",
+			APIKey:            "generate from aistudio",
 		}
 	}
 	return &Config{
-		ModelName: os.Getenv("MODEL_NAME"),
-		APIKey:    os.Getenv("API_KEY"),
+		GeneralModelName:  os.Getenv("GENERAL_MODEL_NAME"),
+		ImageGenModelName: os.Getenv("IMAGE_GEN_MODEL_NAME"),
+		APIKey:            os.Getenv("API_KEY"),
 	}
 }
