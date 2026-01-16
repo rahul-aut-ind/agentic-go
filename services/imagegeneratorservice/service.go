@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	ImageGeneratorFlowName = "imageGeneratorFlow"
+	ImageGeneratorSequentialFlowName = "imageGeneratorSequentialFlow"
 )
 
 type (
@@ -41,10 +41,10 @@ func NewClient(ctx context.Context, cfg *config.Config, log *logger.Logger) *Cli
 
 func (c *Client) GenerateImage(ctx context.Context, concept string) (string, error) {
 	// Define a type-safe flow
-	recipeFlow := genkit.DefineFlow(c.genkit, ImageGeneratorFlowName, c.generateImageFlow)
+	imageGenSequentialFlow := genkit.DefineFlow(c.genkit, ImageGeneratorSequentialFlowName, c.generateImageFlow)
 
 	// Run the flow
-	resp, err := recipeFlow.Run(ctx, &models.ImageGeneratorRequest{
+	resp, err := imageGenSequentialFlow.Run(ctx, &models.ImageGeneratorRequest{
 		Concept: concept,
 	})
 	if err != nil {
