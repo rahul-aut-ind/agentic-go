@@ -1,12 +1,7 @@
 # genkit-go
 Agentic patterns with genkit for go
 
-
-Reference: https://genkit.dev/docs/get-started/?lang=go
-
-Code: https://github.com/firebase/genkit/tree/main/go
-
-Creativity Parameters for LLMs: https://genkit.dev/docs/models/?lang=go#parameters-that-control-creativity-1
+Change the below parameters in the model for customized results from supported models.
 
 Temperature
 
